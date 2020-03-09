@@ -39,10 +39,10 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 return true;
             }
         }
-        //检查有没有需要用户权限的注解
-//        if (method.isAnnotationPresent(UserLoginToken.class)) {
-//            UserLoginToken userLoginToken = method.getAnnotation(UserLoginToken.class);
-//            if (userLoginToken.required()) {
+        // 检查有没有需要用户权限的注解
+        if (method.isAnnotationPresent(UserLoginToken.class)) {
+            UserLoginToken userLoginToken = method.getAnnotation(UserLoginToken.class);
+            if (userLoginToken.required()) {
                 // 执行认证
                 if (token == null) {
                     throw new UnauthorizedException("无token，请重新登录");
@@ -68,8 +68,9 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 } catch (JWTVerificationException e) {
                     throw new RuntimeException("401");
                 }
-//            }
-//        }
+                return true;
+            }
+        }
         return true;
     }
 
