@@ -1,0 +1,12 @@
+###################  项目端口配置  ###################
+server:
+  port: 9090
+  servlet:
+    context-path: /blog
+
+###################  spring配置  ###################
+logging:
+  level:
+    ROOT: INFO
+    com:
+      xncoding: DEBUG
