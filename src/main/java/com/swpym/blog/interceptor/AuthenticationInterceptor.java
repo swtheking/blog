@@ -5,7 +5,9 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.swpym.blog.annotation.PassToken;
 import com.swpym.blog.annotation.UserLoginToken;
 import com.swpym.blog.common.util.JWTUtil;
+import com.swpym.blog.service.UserService;
 import org.apache.shiro.authz.UnauthorizedException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,6 +24,9 @@ import com.swpym.blog.pojo.User;
  * @date: 2020-03-09 14:03
  */
 public class AuthenticationInterceptor implements HandlerInterceptor {
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
@@ -54,10 +59,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 } catch (JWTDecodeException j) {
                     throw new UnauthorizedException("token获取用户信息异常");
                 }
-                //  通过username查找用户
-                User user = new User();
-                user.setUsername("sw");
-                user.setPassword("123456");
+                // 根据用户账号获取账号和密码信息
+                User user = userService.findAccountInfoByUsername(username);
                 if (user == null) {
                     // 一般是跳转到 登录界面
                     throw new UnauthorizedException("用户不存在，请重新登录");

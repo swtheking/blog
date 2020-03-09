@@ -10,10 +10,14 @@ import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.swpym.blog.service.UserService;
+
 
 /**
  * @description:
@@ -22,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class LoginTest {
+    @Autowired
+    private UserService userService;
 
     private static final Logger _logger = LoggerFactory.getLogger(LoginTest.class);
 
@@ -32,9 +38,10 @@ public class LoginTest {
         _logger.info("用户请求登录获取Token");
         String username = loginParam.getUsername();
         String password = loginParam.getPassword();
-        // 获取用户信息 到数据库
-        String encodedPassword = "123456";
-        if (password.equals("123456")) {
+        // 获取用户信息到数据库
+        User user = userService.findAccountInfoByUsername(username);
+        String encodedPassword = user.getPassword();
+        if (password.equals(user.getPassword())) {
             return new BaseResponse<>(true, "Login success", JWTUtil.sign(username, encodedPassword));
         } else {
             throw new UnauthorizedException("密码错误");

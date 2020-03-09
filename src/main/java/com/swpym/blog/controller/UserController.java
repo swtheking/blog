@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @author panym
- * @Description: ${todo}
+ * @Description: ${用户信息的控制层}
  * @Date 14:21  2020/3/9
  */
 
@@ -20,9 +20,15 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping(value = "/findAll")
+    @GetMapping(value = "/findAll")
     @PassToken
     public List<User> findAll(){
         return userService.findAllUsers();
+    }
+
+    @GetMapping(value = "/findAccount")
+    @PassToken
+    public User findAccount(@RequestParam(value = "username") String username){
+        return userService.findAccountInfoByUsername(username);
     }
 }
