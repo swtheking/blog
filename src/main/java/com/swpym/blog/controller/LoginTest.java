@@ -42,6 +42,7 @@ public class LoginTest {
     }
 
     @PostMapping("/find")
+    @UserLoginToken
     public User find(){
         return new User();
     }
