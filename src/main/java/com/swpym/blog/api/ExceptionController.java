@@ -29,7 +29,7 @@ public class ExceptionController {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public BaseResponse globalException(HttpServletRequest request, Throwable ex) {
-        return new BaseResponse<>(false, "其他异常", null);
+        return new BaseResponse<String>(false, "其他异常", ex.getMessage());
     }
 
     /*
