@@ -31,6 +31,7 @@ public class LoginTest {
         _logger.info("用户请求登录获取Token");
         String username = loginParam.getUsername();
         String password = loginParam.getPassword();
+        // 获取用户信息 到数据库
         String encodedPassword = "123456";
         if (password.equals("123456")) {
             return new BaseResponse<>(true, "Login success", JWTUtil.sign(username, encodedPassword));

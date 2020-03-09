@@ -21,8 +21,8 @@ public class ExceptionController {
     // 捕捉UnauthorizedException
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UnauthorizedException.class)
-    public BaseResponse handle401() {
-        return new BaseResponse<>(false, "UnauthorizedException", null);
+    public BaseResponse handle401(Throwable ex) {
+        return new BaseResponse<String>(false, "UnauthorizedException(token认证异常)", ex.getMessage());
     }
 
     // 捕捉其他所有异常

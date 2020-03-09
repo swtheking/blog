@@ -5,6 +5,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.swpym.blog.annotation.PassToken;
 import com.swpym.blog.annotation.UserLoginToken;
 import com.swpym.blog.common.util.JWTUtil;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -44,14 +45,14 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             if (userLoginToken.required()) {
                 // 执行认证
                 if (token == null) {
-                    throw new RuntimeException("无token，请重新登录");
+                    throw new UnauthorizedException("无token，请重新登录");
                 }
                 // 获取 token 中的用户名
                 String username = null;
                 try {
                     username = JWTUtil.getUsername(token);
                 } catch (JWTDecodeException j) {
-                    throw new RuntimeException("401");
+                    throw new UnauthorizedException("token获取用户信息异常");
                 }
                 //  通过username查找用户
                 User user = new User();
@@ -59,7 +60,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 user.setPassword("123456");
                 if (user == null) {
                     // 一般是跳转到 登录界面
-                    throw new RuntimeException("用户不存在，请重新登录");
+                    throw new UnauthorizedException("用户不存在，请重新登录");
                 }
                 // 验证 token
                 try {
