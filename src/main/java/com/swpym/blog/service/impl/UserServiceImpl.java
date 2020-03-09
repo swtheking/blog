@@ -1,6 +1,9 @@
 package com.swpym.blog.service.impl;
 
+import com.swpym.blog.annotation.OperationLogDetail;
 import com.swpym.blog.dao.UserDao;
+import com.swpym.blog.enums.OperationType;
+import com.swpym.blog.enums.OperationUnit;
 import com.swpym.blog.pojo.User;
 import com.swpym.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +29,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findAccountInfoByUsername(String username) {
         return userDao.findAccountInfoByUsername(username);
+    }
+
+    @OperationLogDetail(detail = "测试信息",level = 3,operationUnit = OperationUnit.USER, operationType = OperationType.UNKNOWN)
+    @Override
+    public void test() {
+        System.out.println("哈哈哈哈哈哈哈哈哈哈哈");
     }
 }

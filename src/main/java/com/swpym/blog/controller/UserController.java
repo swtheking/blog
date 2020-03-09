@@ -31,4 +31,9 @@ public class UserController {
     public User findAccount(@RequestParam(value = "username") String username){
         return userService.findAccountInfoByUsername(username);
     }
+
+    @RequestMapping("/test")
+    public void test(){
+        userService.test();
+    }
 }
