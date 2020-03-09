@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserDao extends JpaRepository<User,Long> {
 
-    @Query(value = "select username,password from User where username = :username")
+    @Query(value = "select new com.swpym.blog.pojo.User( u.username,u.password) from User u where u.username = :username")
     User findAccountInfoByUsername(@Param("username") String username);
 }
