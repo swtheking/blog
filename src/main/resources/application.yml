@@ -43,3 +43,7 @@ spring:
       ddl-auto: update
     # 在日志中打印出执行sql语句的信息
     show-sql: true
+---
+spring:
+        aop:
+          auto=true:
