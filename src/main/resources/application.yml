@@ -10,3 +10,36 @@ logging:
     ROOT: INFO
     com:
       xncoding: DEBUG
+
+################### 配置MySQL数据源 ###################
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/blog_work?useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    # 使用druid连接池
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 配置druid连接池
+    initialSize: 5  # 初始连接数
+    minIdle: 5      # 最小空闲数
+    maxActive: 20   # 最大活跃数
+    maxWait: 60000  # 最大等待时间(ms)
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 30000
+    filters: stat
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+    sql-script-encoding: utf-8
+---
+################### Jpa配置 ###################
+spring:
+  jpa:
+    # 更新数据表结构
+    hibernate:
+      ddl-auto: update
+    # 在日志中打印出执行sql语句的信息
+    show-sql: true
