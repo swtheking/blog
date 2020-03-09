@@ -1,5 +1,6 @@
 package com.swpym.blog.controller;
 
+import com.swpym.blog.annotation.PassToken;
 import com.swpym.blog.annotation.UserLoginToken;
 import com.swpym.blog.api.model.BaseResponse;
 import com.swpym.blog.api.model.LoginParam;
@@ -25,7 +26,7 @@ public class LoginTest {
     private static final Logger _logger = LoggerFactory.getLogger(LoginTest.class);
 
     @PostMapping("/login")
-//    @UserLoginToken
+    @PassToken
     public BaseResponse<String> login(@RequestHeader(name="Content-Type", defaultValue = "application/json") String contentType,
                                       @RequestBody LoginParam loginParam) {
         _logger.info("用户请求登录获取Token");
@@ -36,12 +37,11 @@ public class LoginTest {
         if (password.equals("123456")) {
             return new BaseResponse<>(true, "Login success", JWTUtil.sign(username, encodedPassword));
         } else {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("密码错误");
         }
     }
 
     @PostMapping("/find")
-    @UserLoginToken
     public User find(){
         return new User();
     }
