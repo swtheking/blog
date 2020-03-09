@@ -41,6 +41,8 @@ spring:
     # 更新数据表结构
     hibernate:
       ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
     # 在日志中打印出执行sql语句的信息
     show-sql: true
 ---
