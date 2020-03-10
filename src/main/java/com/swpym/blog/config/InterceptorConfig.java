@@ -13,8 +13,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @author: shaowei
  * @date: 2020-03-09 14:16
  */
-//@Configuration
-public abstract  class InterceptorConfig implements  WebMvcConfigurer {
+@Configuration
+public class InterceptorConfig implements  WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authenticationInterceptor())

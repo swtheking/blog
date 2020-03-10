@@ -62,10 +62,9 @@ public class LoginController {
 
     @RequestMapping("/loginOut")
     @UserLoginToken
-    public void loginOut(@RequestHeader(name = "Content-Type", defaultValue = "application/json") String contentType,
-                         @RequestBody LoginParam loginParam) {
+    public void loginOut() {
         _logger.info("用户退出登录");
-        CookieUtil.removeCookie(loginParam.getUsername());
+        CookieUtil.removeCookie(UserSessionConst.TOKEN_COOKIE);
     }
 
 
