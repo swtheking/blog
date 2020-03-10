@@ -19,10 +19,10 @@ import java.util.Arrays;
 @Slf4j
 public class LogAspectService {
 
-    @Pointcut("execution( * com.swpym.blog.service.impl.*.save(..)) " +
-            "|| execution (* com.swpym.blog.service.impl.*.find(..))" +
-            "|| execution (* com.swpym.blog.service.impl.*.update(..))" +
-            "|| execution (* com.swpym.blog.service.impl.*.delete(..))")
+    @Pointcut("execution( * com.swpym.blog.service.impl.*.save*(..)) " +
+            "|| execution (* com.swpym.blog.service.impl.*.find*(..))" +
+            "|| execution (* com.swpym.blog.service.impl.*.update*(..))" +
+            "|| execution (* com.swpym.blog.service.impl.*.delete*(..))")
     public void webLog() {
     }
 
