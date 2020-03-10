@@ -1,6 +1,7 @@
 package com.swpym.blog.controller;
 
 import com.swpym.blog.annotation.PassToken;
+import com.swpym.blog.annotation.UserLoginToken;
 import com.swpym.blog.service.UserService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;

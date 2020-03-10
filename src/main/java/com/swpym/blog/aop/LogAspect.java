@@ -2,6 +2,9 @@ package com.swpym.blog.aop;
 
 import com.alibaba.fastjson.JSON;
 import com.swpym.blog.annotation.OperationLogDetail;
+import com.swpym.blog.common.util.CookieUtil;
+import com.swpym.blog.common.util.JWTUtil;
+import com.swpym.blog.constant.UserSessionConst;
 import com.swpym.blog.pojo.OperationLog;
 import com.swpym.blog.service.OperationLogService;
 import lombok.extern.slf4j.Slf4j;
@@ -68,9 +71,9 @@ public class LogAspect {
         operationLog.setId(UUID.randomUUID().toString());
         operationLog.setCreateTime(new Date());
         operationLog.setMethod(signature.getDeclaringTypeName() + "." + signature.getName());
-        // TODO 从token中获取用户信息
-        operationLog.setUserId("用户ID");
-        operationLog.setUserName("用户名");
+        String token = CookieUtil.getCookie(UserSessionConst.TOKEN_COOKIE);
+        String username = JWTUtil.getUsername(token);
+        operationLog.setUserName(username);
         if (res != null) {
             operationLog.setLevel(res.level());
             operationLog.setDescribe(getDetail(((MethodSignature) joinPoint.getSignature()).getParameterNames(), joinPoint.getArgs(), res));
