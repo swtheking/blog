@@ -7,6 +7,7 @@ import com.swpym.blog.enums.OperationUnit;
 import com.swpym.blog.pojo.User;
 import com.swpym.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class UserServiceImpl implements UserService {
         return userDao.findAll();
     }
 
+    @Cacheable(value = "myToken", key = "#username")
     @Override
     public User findAccountInfoByUsername(String username) {
         return userDao.findAccountInfoByUsername(username);
