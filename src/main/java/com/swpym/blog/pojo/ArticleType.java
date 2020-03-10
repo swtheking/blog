@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 /**
  * @author panym
- * @Description: ${todo}
+ * @Description: ${文章类别的实体类}
  * @date 20:44  2020/3/9
  */
 @Data
@@ -22,7 +22,7 @@ public class ArticleType {
     @Id    //主键id
     @GeneratedValue(strategy= GenerationType.IDENTITY)//主键生成策略
     @Column(name = "id")//数据库字段名
-    private int id;
+    private Long id;
 
     @Column(name = "name", nullable = false, columnDefinition = "varchar(100) comment '类别名称'")
     private String name;
@@ -31,5 +31,5 @@ public class ArticleType {
     private String brief;
 
     @Column(name = "level", columnDefinition = "tinyint(3) comment '类别级别 1:大类'")
-    private int level;
+    private Integer level;
 }

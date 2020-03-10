@@ -2,6 +2,7 @@ package com.swpym.blog.controller;
 
 import com.swpym.blog.annotation.PassToken;
 import com.swpym.blog.service.UserService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.swpym.blog.pojo.User;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@Api
 public class UserController {
     @Autowired
     private UserService userService;

@@ -22,7 +22,7 @@ public class UserInfo {
     @Id    //主键id
     @GeneratedValue(strategy= GenerationType.IDENTITY)//主键生成策略
     @Column(name = "id")//数据库字段名
-    private int id;
+    private Long id;
 
     @Column(name = "username", nullable = false, unique = true, columnDefinition = "varchar(100) comment '用户账号'")
     private String username;
@@ -43,7 +43,7 @@ public class UserInfo {
     private String nickname;
 
     @Column(name = "sex", columnDefinition = "tinyint(2) comment '用户性别1:男 0:女'")
-    private int sex;
+    private Integer sex;
 
     @Column(name = "birth", columnDefinition = "date comment '出生日期'")
     private String birth;
@@ -55,7 +55,7 @@ public class UserInfo {
     private String updateTime;
 
     @Column(name = "status", columnDefinition = "tinyint(3) comment '用户状态'")
-    private int status;
+    private Integer status;
 
     @Override
     public String toString() {
