@@ -10,6 +10,15 @@ import java.util.Arrays;
 
 public class CookieUtil {
 
+    /*
+     * @description: 将token放入cookie中
+     * @author: shaowei
+     * @date: 2020-03-10 13:35:38
+     * @param name
+     * @param value
+     * @param maxAge
+     * @return: void
+     */
     public static void addCookie(String name, String value, int maxAge) {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletResponse response = requestAttributes.getResponse();
@@ -20,6 +29,13 @@ public class CookieUtil {
         response.addCookie(cookie);
     }
 
+    /*
+     * @description: 获取当前请求中的token值
+     * @author: shaowei
+     * @date: 2020-03-10 13:35:58
+     * @param name
+     * @return: java.lang.String
+     */
     public static String getCookie(String name) {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = requestAttributes.getRequest();
@@ -36,6 +52,13 @@ public class CookieUtil {
         return currentCookie.getValue();
     }
 
+    /*
+     * @description: 去除当前请求中token
+     * @author: shaowei
+     * @date: 2020-03-10 13:36:23
+     * @param name
+     * @return: void
+     */
     public static void removeCookie(String name) {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletResponse response = requestAttributes.getResponse();
