@@ -11,7 +11,7 @@ public class UserSessionConst {
 
     public static final String TOKEN_COOKIE = "token";
 
-    public static final int EXPIRE_HOURS = 12;
+    public static final int EXPIRE_HOURS = 1;
 
     public static final long EXPIRE_MILLIS = TimeUnit.HOURS.toMillis(EXPIRE_HOURS);
 

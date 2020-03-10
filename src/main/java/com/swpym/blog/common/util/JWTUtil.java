@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.swpym.blog.constant.UserSessionConst;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,11 +20,8 @@ public class JWTUtil {
     // 日志
     private static final Logger log = LoggerFactory.getLogger(JWTUtil.class);
 
-    // 过期时间30分钟
-    private static final long EXPIRE_TIME = 30 * 60 * 1000;
-
     /*
-     * @description: 生成签名,30min后过期
+     * @description: 生成签名,1小时后过期
      * @author: shaowei
      * @date: 2020-03-09 13:47:57
      * @param username    用户名
@@ -32,7 +30,7 @@ public class JWTUtil {
      */
     public static String sign(String username, String secret) {
         // 设置过期时间
-        Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
+        Date date = new Date(System.currentTimeMillis() + UserSessionConst.EXPIRE_MILLIS);
         // 密码加密
         Algorithm algorithm = Algorithm.HMAC256(secret);
         // 附带username信息
