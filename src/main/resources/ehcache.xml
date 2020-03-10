@@ -37,8 +37,8 @@
     <cache name="myToken"
            maxElementsInMemory="100"
            eternal="false"
-           timeToIdleSeconds="5400"
-           timeToLiveSeconds="5400"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="3600"
            maxElementsOnDisk="100"
            diskExpiryThreadIntervalSeconds="120"
            memoryStoreEvictionPolicy="LRU">
