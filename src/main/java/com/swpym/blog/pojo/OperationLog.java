@@ -20,7 +20,7 @@ import java.util.Date;
 public class OperationLog {
 
     @Id    //主键id
-    @Column(name = "id")//数据库字段名
+    @Column(name = "id", columnDefinition = "varchar(64)")//数据库字段名
     private String id;
 
     @Column(name = "create_time")
@@ -28,7 +28,7 @@ public class OperationLog {
     /**
      * 日志等级
      */
-    @Column(name = "level")
+    @Column(name = "log_level")
     private Integer level;
 
     /**
@@ -46,7 +46,7 @@ public class OperationLog {
     /**
      * 参数
      */
-    @Column(name = "args", columnDefinition = "参数")
+    @Column(name = "args")
     private String args;
 
     /**
@@ -64,7 +64,7 @@ public class OperationLog {
     /**
      * 日志描述
      */
-    @Column(name = "describe")
+    @Column(name = "log_describe")
     private String describe;
 
     /**
