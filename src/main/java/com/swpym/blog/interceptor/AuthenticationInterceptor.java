@@ -4,7 +4,9 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.swpym.blog.annotation.PassToken;
 import com.swpym.blog.annotation.UserLoginToken;
+import com.swpym.blog.common.util.CookieUtil;
 import com.swpym.blog.common.util.JWTUtil;
+import com.swpym.blog.constant.UserSessionConst;
 import com.swpym.blog.service.UserService;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
-        String token = httpServletRequest.getHeader("token");// 从 http 请求头中取出 token
+//        String token = httpServletRequest.getHeader("token");// 从 http 请求头中取出 token
+        String token = CookieUtil.getCookie(UserSessionConst.TOKEN_COOKIE);
         // 如果不是映射到方法直接通过
         if (!(object instanceof HandlerMethod)) {
             return true;

@@ -4,7 +4,9 @@ import com.swpym.blog.annotation.PassToken;
 import com.swpym.blog.annotation.UserLoginToken;
 import com.swpym.blog.api.model.BaseResponse;
 import com.swpym.blog.api.model.LoginParam;
+import com.swpym.blog.common.util.CookieUtil;
 import com.swpym.blog.common.util.JWTUtil;
+import com.swpym.blog.constant.UserSessionConst;
 import com.swpym.blog.pojo.User;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -42,7 +44,11 @@ public class LoginTest {
         User user = userService.findAccountInfoByUsername(username);
         String encodedPassword = user.getPassword();
         if (password.equals(user.getPassword())) {
-            return new BaseResponse<>(true, "Login success", JWTUtil.sign(username, encodedPassword));
+            // 生成token
+            String token = JWTUtil.sign(username, encodedPassword);
+            // 加入cookie
+            CookieUtil.addCookie(UserSessionConst.TOKEN_COOKIE, token, UserSessionConst.EXPIRE_SECONDS);
+            return new BaseResponse<>(true, "Login success", token);
         } else {
             throw new UnauthorizedException("密码错误");
         }
