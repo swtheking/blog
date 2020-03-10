@@ -6,8 +6,8 @@
     <Properties>
         <!-- 日志默认存放的位置,这里设置为项目根路径下,也可指定绝对路径 -->
         <!-- ${web:rootDir}是web项目根路径,java项目没有这个变量,需要删掉,否则会报异常 -->
-        <!--<property name="basePath">D://log4j2Logs</property>-->
-        <property name="basePath">D://log4j2Logs</property>
+        <!--<property name="basePath">E://log4j2Logs</property>-->
+        <property name="basePath">E://log4j2Logs</property>
 
         <!-- 控制台默认输出格式,"%-5level":日志级别,"%l":输出完整的错误位置,是小写的L,因为有行号显示,所以影响日志输出的性能 -->
         <property name="console_log_pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %l - %m%n</property>
@@ -20,30 +20,30 @@
         <property name="output_log_level">DEBUG</property>
 
         <!-- 日志默认存放路径(所有级别日志) -->
-        <property name="rolling_fileName">D://all.log</property>
+        <property name="rolling_fileName">E://all.log</property>
         <!-- 日志默认压缩路径,将超过指定文件大小的日志,自动存入按"年月"建立的文件夹下面并进行压缩,作为存档 -->
         <property name="rolling_filePattern">${basePath}/%d{yyyy-MM}/all-%d{yyyy-MM-dd}-%i.log.gz</property>
         <!-- 日志默认同类型日志,同一文件夹下可以存放的数量,不设置此属性则默认为7个 -->
         <property name="rolling_max">50</property>
 
         <!-- Info日志默认存放路径(Info级别日志) -->
-        <property name="info_fileName">D://info.log</property>
+        <property name="info_fileName">E://info.log</property>
         <!-- Info日志默认压缩路径,将超过指定文件大小的日志,自动存入按"年月"建立的文件夹下面并进行压缩,作为存档 -->
-        <property name="info_filePattern">D://%d{yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log.gz</property>
+        <property name="info_filePattern">E://%d{yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log.gz</property>
         <!-- Info日志默认同一文件夹下可以存放的数量,不设置此属性则默认为7个 -->
         <property name="info_max">10</property>
 
         <!-- Warn日志默认存放路径(Warn级别日志) -->
-        <property name="warn_fileName">D://warn.log</property>
+        <property name="warn_fileName">E://warn.log</property>
         <!-- Warn日志默认压缩路径,将超过指定文件大小的日志,自动存入按"年月"建立的文件夹下面并进行压缩,作为存档 -->
-        <property name="warn_filePattern">D://%d{yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log.gz</property>
+        <property name="warn_filePattern">E://%d{yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log.gz</property>
         <!-- Warn日志默认同一文件夹下可以存放的数量,不设置此属性则默认为7个 -->
         <property name="warn_max">10</property>
 
         <!-- Error日志默认存放路径(Error级别日志) -->
-        <property name="error_fileName">D://error.log</property>
+        <property name="error_fileName">E://error.log</property>
         <!-- Error日志默认压缩路径,将超过指定文件大小的日志,自动存入按"年月"建立的文件夹下面并进行压缩,作为存档 -->
-        <property name="error_filePattern">D://%d{yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log.gz</property>
+        <property name="error_filePattern">E://%d{yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log.gz</property>
         <!-- Error日志默认同一文件夹下可以存放的数量,不设置此属性则默认为7个 -->
         <property name="error_max">10</property>
 

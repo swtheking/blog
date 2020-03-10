@@ -57,6 +57,11 @@ public class UserInfo {
     @Column(name = "status", columnDefinition = "tinyint(3) comment '用户状态'")
     private Integer status;
 
+    public UserInfo(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return "UserInfo{" +
