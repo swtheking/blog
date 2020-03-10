@@ -9,7 +9,6 @@ import com.swpym.blog.common.util.JWTUtil;
 import com.swpym.blog.constant.UserSessionConst;
 import com.swpym.blog.pojo.User;
 import org.apache.shiro.authz.UnauthorizedException;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +18,17 @@ import com.swpym.blog.service.UserService;
 
 
 /**
- * @description:
+ * @description: 用户登录操作
  * @author: shaowei
  * @date: 2020-03-09 14:18
  */
 @RestController
-public class LoginTest {
+public class LoginController {
+
     @Autowired
     private UserService userService;
 
-    private static final Logger _logger = LoggerFactory.getLogger(LoginTest.class);
+    private static final Logger _logger = LoggerFactory.getLogger(LoginController.class);
 
     @PostMapping("/login")
     @PassToken
