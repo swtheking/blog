@@ -16,7 +16,7 @@ spring:
   datasource:
     url: jdbc:log4jdbc:mysql://127.0.0.1:3306/blog_work?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf-8
     username: root
-    password: root
+    password: 123456
     driver-class-name: net.sf.log4jdbc.DriverSpy  # 使用了log4jdbc
     # 使用druid连接池
     type: com.alibaba.druid.pool.DruidDataSource
@@ -35,6 +35,11 @@ spring:
     maxOpenPreparedStatements: 20
     sql-script-encoding: utf-8
 ---
+biz:
+  datasource:
+    url: jdbc:log4jdbc:mysql://127.0.0.1:3306/test?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf-8
+    username: root
+    password: 123456
 ################### Jpa配置 ###################
 spring:
   jpa:
@@ -62,7 +67,7 @@ spring:
 logging:
   config: classpath:log4j2.xml
   file:
-    path: E:/logs/springboot-aop
+    path: D:/logs/springboot-aop
   level: # 屏蔽其他日志信息
     jdbc.sqlonly: warn
     jdbc.sqltiming: info
@@ -75,8 +80,12 @@ logging:
 spring:
   devtools:
     restart:
-      enabled: true  #设置开启热部署
+      enabled: false  #设置开启热部署
       additional-paths: src/main/java #重启目录
       exclude: WEB-INF/**
   freemarker:
     cache: false    #页面不加载缓存，修改即时生效
+
+
+xncoding:
+  muti-datasource-open: true #是否开启多数据源(true/false)

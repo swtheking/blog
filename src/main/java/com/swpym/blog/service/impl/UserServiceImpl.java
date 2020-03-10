@@ -1,9 +1,11 @@
 package com.swpym.blog.service.impl;
 
+import com.swpym.blog.annotation.DataSource;
 import com.swpym.blog.annotation.OperationLogDetail;
 import com.swpym.blog.dao.UserDao;
 import com.swpym.blog.enums.OperationType;
 import com.swpym.blog.enums.OperationUnit;
+import com.swpym.blog.mutidatesource.DSEnum;
 import com.swpym.blog.pojo.User;
 import com.swpym.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Cacheable(value = "myToken", key = "#username")
+    @DataSource(name = DSEnum.DATA_SOURCE_BIZ)
     @Override
     public User findAccountInfoByUsername(String username) {
         return userDao.findAccountInfoByUsername(username);
