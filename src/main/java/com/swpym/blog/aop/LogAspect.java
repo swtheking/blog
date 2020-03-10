@@ -8,6 +8,7 @@ import com.swpym.blog.constant.UserSessionConst;
 import com.swpym.blog.pojo.OperationLog;
 import com.swpym.blog.service.OperationLogService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -47,7 +48,7 @@ public class LogAspect {
         } finally {
             try {
                 //方法执行完成后增加日志
-                this.addOperationLog(joinPoint, operationLogDetail, time);
+                this.addOperationLog(joinPoint, operationLogDetail, time, res);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -63,12 +64,13 @@ public class LogAspect {
      * @param time
      * @return: void
      */
-    private void addOperationLog(JoinPoint joinPoint, OperationLogDetail res, long time) {
+    private void addOperationLog(JoinPoint joinPoint, OperationLogDetail res, long time, Object ob) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         OperationLog operationLog = new OperationLog();
         operationLog.setRunTime(time);
-        operationLog.setReturnValue(JSON.toJSONString(res));
+        operationLog.setReturnValue(ob + "");
         operationLog.setId(UUID.randomUUID().toString());
+        operationLog.setArgs(StringUtils.join(joinPoint.getArgs(), ","));
         operationLog.setCreateTime(new Date());
         operationLog.setMethod(signature.getDeclaringTypeName() + "." + signature.getName());
         String token = CookieUtil.getCookie(UserSessionConst.TOKEN_COOKIE);
@@ -76,38 +78,11 @@ public class LogAspect {
         operationLog.setUserName(username);
         if (res != null) {
             operationLog.setLevel(res.level());
-            operationLog.setDescribe(getDetail(((MethodSignature) joinPoint.getSignature()).getParameterNames(), joinPoint.getArgs(), res));
+            operationLog.setDescribe(res.detail());
             operationLog.setOperationType(res.operationType().getValue());
             operationLog.setOperationUnit(res.operationUnit().getValue());
         }
         this.operationLogService.save(operationLog);
-    }
-
-    /**
-     * 对当前登录用户和占位符处理
-     *
-     * @param argNames   方法参数名称数组
-     * @param args       方法参数数组
-     * @param annotation 注解信息
-     * @return 返回处理后的描述
-     */
-    private String getDetail(String[] argNames, Object[] args, OperationLogDetail annotation) {
-        Map<Object, Object> map = new HashMap<>(4);
-        for (int i = 0; i < argNames.length; i++) {
-            map.put(argNames[i], args[i]);
-        }
-        String detail = annotation.detail();
-        try {
-            detail = annotation.detail();
-            for (Map.Entry<Object, Object> entry : map.entrySet()) {
-                Object k = entry.getKey();
-                Object v = entry.getValue();
-                detail = detail.replace("{{" + k + "}}", JSON.toJSONString(v));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return detail;
     }
 
 }
