@@ -6,10 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.MessageCodesResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
- * @description:
+ * @description: 拦截器配置
  * @author: shaowei
  * @date: 2020-03-09 14:16
  */
