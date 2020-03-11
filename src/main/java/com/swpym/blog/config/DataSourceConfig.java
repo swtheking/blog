@@ -1,14 +1,12 @@
 package com.swpym.blog.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.util.JdbcConstants;
 import com.swpym.blog.config.properties.DruidProperties;
 import com.swpym.blog.config.properties.MutiDataSourceProperties;
 import com.swpym.blog.mutidatesource.DSEnum;
 import com.swpym.blog.mutidatesource.DynamicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,7 +14,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 /**
- * @description:
+ * @description: 数据源配置
  * @author: shaowei
  * @date: 2020-03-10 16:41
  */
