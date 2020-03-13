@@ -17,7 +17,7 @@ import java.util.List;
  */
 @RequestMapping("/userinfo")
 @RestController
-@Api(value = "用户信息Controller",tags = {"用户信息操作接口"})
+@Api(value = "用户信息Controller",tags = {"用户信息接口"})
 public class UserInfoController {
     @Autowired
     private UserInfoService userInfoService;
@@ -40,5 +40,4 @@ public class UserInfoController {
     public UserInfo findAccountInfoByUsername(@RequestBody String username){
         return userInfoService.findAccountInfoByUsername(username);
     }
-
 }
