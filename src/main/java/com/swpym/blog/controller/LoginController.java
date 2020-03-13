@@ -60,7 +60,7 @@ public class LoginController {
         return new User();
     }
 
-    @RequestMapping("/loginOut")
+    @RequestMapping(value = "/loginOut", method = RequestMethod.GET)
     @UserLoginToken
     public void loginOut() {
         _logger.info("用户退出登录");
