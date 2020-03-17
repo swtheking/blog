@@ -30,41 +30,41 @@ public class LoginController {
 
     private static final Logger _logger = LoggerFactory.getLogger(LoginController.class);
 
-    @PostMapping("/login")
-    @PassToken
-    public BaseResponse<String> login(@RequestHeader(name = "Content-Type", defaultValue = "application/json") String contentType,
-                                      @RequestBody LoginParam loginParam) {
-        _logger.info("用户请求登录获取Token");
-        String username = loginParam.getUsername();
-        String password = loginParam.getPassword();
-        // 获取用户信息到数据库
-        User user = userService.findAccountInfoByUsername(username);
-        if (user == null) {
-            throw new UnauthorizedException("用户不存在");
-        }
-        String encodedPassword = user.getPassword();
-        if (password.equals(user.getPassword())) {
-            // 生成token
-            String token = JWTUtil.sign(username, encodedPassword);
-            // 加入cookie
-            CookieUtil.addCookie(UserSessionConst.TOKEN_COOKIE, token, UserSessionConst.EXPIRE_SECONDS);
-            return new BaseResponse<>(true, "Login success", null);
-        } else {
-            throw new UnauthorizedException("密码错误");
-        }
-    }
-
-    @PostMapping("/find")
-    @UserLoginToken
-    public User find() {
-        return new User();
-    }
-
-    @RequestMapping(value = "/loginOut", method = RequestMethod.GET)
-    @UserLoginToken
-    public void loginOut() {
-        _logger.info("用户退出登录");
-        CookieUtil.removeCookie(UserSessionConst.TOKEN_COOKIE);
-    }
+//    @PostMapping("/login")
+//    @PassToken
+//    public BaseResponse<String> login(@RequestHeader(name = "Content-Type", defaultValue = "application/json") String contentType,
+//                                      @RequestBody LoginParam loginParam) {
+//        _logger.info("用户请求登录获取Token");
+//        String username = loginParam.getUsername();
+//        String password = loginParam.getPassword();
+//        // 获取用户信息到数据库
+//        User user = userService.findAccountInfoByUsername(username);
+//        if (user == null) {
+//            throw new UnauthorizedException("用户不存在");
+//        }
+//        String encodedPassword = user.getPassword();
+//        if (password.equals(user.getPassword())) {
+//            // 生成token
+//            String token = JWTUtil.sign(username, encodedPassword);
+//            // 加入cookie
+//            CookieUtil.addCookie(UserSessionConst.TOKEN_COOKIE, token, UserSessionConst.EXPIRE_SECONDS);
+//            return BaseResponse.success(null);
+//        } else {
+//            throw new UnauthorizedException("密码错误");
+//        }
+//    }
+//
+//    @PostMapping("/find")
+//    @UserLoginToken
+//    public User find() {
+//        return new User();
+//    }
+//
+//    @RequestMapping(value = "/loginOut", method = RequestMethod.GET)
+//    @UserLoginToken
+//    public void loginOut() {
+//        _logger.info("用户退出登录");
+//        CookieUtil.removeCookie(UserSessionConst.TOKEN_COOKIE);
+//    }
 
 }

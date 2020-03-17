@@ -1,5 +1,7 @@
 package com.swpym.blog.api.model;
 
+import org.apache.http.HttpStatus;
+
 /**
  * @description: API接口的基础返回类
  * @author: shaowei
@@ -16,19 +18,29 @@ public class BaseResponse<T> {
      */
     private String msg;
 
+    /*
+     * 错误代码
+     */
+    private Integer code;
+    private static final String SUCCESS_MSG = "成功";
     /**
      * 返回数据
      */
     private T data;
 
-    public BaseResponse() {
-
-    }
-
-    public BaseResponse(boolean success, String msg, T data) {
+    private BaseResponse(boolean success, Integer code, String msg, T data) {
         this.success = success;
         this.msg = msg;
         this.data = data;
+        this.code = code;
+    }
+
+    public static <T> BaseResponse<T> success(T data) {
+        return new BaseResponse<>(true, HttpStatus.SC_OK, SUCCESS_MSG, data);
+    }
+
+    public static <T> BaseResponse<T> error(int code, String message, T data) {
+        return new BaseResponse<>(true, code, message, data);
     }
 
     public boolean isSuccess() {

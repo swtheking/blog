@@ -20,4 +20,6 @@ public interface UserInfoService {
      * @return 用户账号信息
      */
     UserInfo findAccountInfoByUsername(String username);
+
+    UserInfo checkLogin(String username, String password);
 }
