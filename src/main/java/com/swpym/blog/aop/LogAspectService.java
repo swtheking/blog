@@ -22,6 +22,7 @@ public class LogAspectService {
     @Pointcut("execution( * com.swpym.blog.service.impl.*.save*(..)) " +
             "|| execution (* com.swpym.blog.service.impl.*.find*(..))" +
             "|| execution (* com.swpym.blog.service.impl.*.update*(..))" +
+            "|| execution (* com.swpym.blog.service.impl.*.check*(..))" +
             "|| execution (* com.swpym.blog.service.impl.*.delete*(..))")
     public void webLog() {
     }
