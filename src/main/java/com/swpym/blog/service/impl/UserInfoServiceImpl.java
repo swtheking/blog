@@ -1,14 +1,17 @@
 package com.swpym.blog.service.impl;
 
+import com.swpym.blog.annotation.DataSource;
 import com.swpym.blog.api.model.BaseResponse;
 import com.swpym.blog.common.util.CookieUtil;
 import com.swpym.blog.common.util.JWTUtil;
 import com.swpym.blog.constant.UserSessionConst;
 import com.swpym.blog.dao.UserInfoDao;
+import com.swpym.blog.mutidatesource.DSEnum;
 import com.swpym.blog.pojo.UserInfo;
 import com.swpym.blog.service.UserInfoService;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,13 +37,15 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
+    @Cacheable(value = "myToken", key = "#username")
+    @DataSource(name = DSEnum.DATA_SOURCE_BIZ)
     public UserInfo findAccountInfoByUsername(String username) {
         return userInfoDao.findAccountInfoByUsername(username);
     }
 
     @Override
     public UserInfo checkLogin(String username, String password) {
-        UserInfo userInfo = userInfoDao.findAccountInfoByUsername(username);
+        UserInfo userInfo = this.findAccountInfoByUsername(username);
         if (userInfo == null) {
             throw new UnauthorizedException("用户不存在");
         }
