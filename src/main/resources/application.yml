@@ -16,7 +16,7 @@ spring:
   datasource:
     url: jdbc:log4jdbc:mysql://127.0.0.1:3306/blog_work?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf-8
     username: root
-    password: root
+    password: 123456
     driver-class-name: net.sf.log4jdbc.DriverSpy  # 使用了log4jdbc
     # 使用druid连接池
     type: com.alibaba.druid.pool.DruidDataSource
@@ -39,7 +39,7 @@ biz:
   datasource:
     url: jdbc:log4jdbc:mysql://127.0.0.1:3306/test?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf-8
     username: root
-    password: root
+    password: 123456
 ################### Jpa配置 ###################
 spring:
   jpa:
@@ -89,3 +89,13 @@ spring:
 
 xncoding:
   muti-datasource-open: true #是否开启多数据源(true/false)
+
+##################httpclient##################
+httpclient:
+  connectTimeout: 20000
+  requestTimeout: 20000
+  socketTimeout: 30000
+  defaultMaxPerRoute: 100
+  maxTotalConnections: 300
+  defaultKeepAliveTimeMillis: 20000
+  closeIdleConnectionWaitTimeSecs: 30
