@@ -7,6 +7,8 @@ import com.swpym.blog.annotation.UserLoginToken;
 import com.swpym.blog.common.util.CookieUtil;
 import com.swpym.blog.common.util.JWTUtil;
 import com.swpym.blog.constant.UserSessionConst;
+import com.swpym.blog.pojo.UserInfo;
+import com.swpym.blog.service.UserInfoService;
 import com.swpym.blog.service.UserService;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ import com.swpym.blog.pojo.User;
 public class AuthenticationInterceptor implements HandlerInterceptor {
 
     @Autowired
-    private UserService userService;
+    private UserInfoService userInfoService;
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
@@ -72,7 +74,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             throw new UnauthorizedException("token获取用户信息异常");
         }
         // 根据用户账号获取账号和密码信息
-        User user = userService.findAccountInfoByUsername(username);
+        UserInfo user = userInfoService.findAccountInfoByUsername(username);
         if (user == null) {
             // 一般是跳转到 登录界面
             throw new UnauthorizedException("用户不存在，请重新登录");
