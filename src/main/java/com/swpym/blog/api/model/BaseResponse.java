@@ -40,7 +40,7 @@ public class BaseResponse<T> {
     }
 
     public static <T> BaseResponse<T> error(int code, String message, T data) {
-        return new BaseResponse<>(true, code, message, data);
+        return new BaseResponse<>(false, code, message, data);
     }
 
     public boolean isSuccess() {
