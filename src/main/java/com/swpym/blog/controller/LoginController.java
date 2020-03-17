@@ -67,5 +67,4 @@ public class LoginController {
         CookieUtil.removeCookie(UserSessionConst.TOKEN_COOKIE);
     }
 
-
 }

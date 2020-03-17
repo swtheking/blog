@@ -1,10 +1,13 @@
 package com.swpym.blog.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.swpym.blog.annotation.PassToken;
 import com.swpym.blog.api.model.BaseResponse;
 import com.swpym.blog.pojo.UserInfo;
 import com.swpym.blog.service.UserInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +21,7 @@ import java.util.List;
 @RequestMapping("/userinfo")
 @RestController
 @Api(value = "用户信息Controller",tags = {"用户信息接口"})
+@Slf4j
 public class UserInfoController {
     @Autowired
     private UserInfoService userInfoService;
@@ -30,7 +34,9 @@ public class UserInfoController {
 
     @ApiOperation(value = "新增用户信息")
     @PostMapping("/addUser")
+    @PassToken
     public BaseResponse addUser(@RequestBody UserInfo userInfo){
+        log.info(JSON.toJSONString(userInfo));
         userInfoService.addUser(userInfo);
         return new BaseResponse(true,"保存成功",null);
     }
