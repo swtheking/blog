@@ -38,7 +38,6 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     @Cacheable(value = "myToken", key = "#username")
-    @DataSource(name = DSEnum.DATA_SOURCE_BIZ)
     public UserInfo findAccountInfoByUsername(String username) {
         return userInfoDao.findAccountInfoByUsername(username);
     }

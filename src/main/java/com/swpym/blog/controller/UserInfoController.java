@@ -63,7 +63,6 @@ public class UserInfoController {
         String password = loginParam.getPassword();
         // 获取用户信息到数据库
         UserInfo user = userInfoService.checkLogin(username, password);
-        user.setPassword("");
         return BaseResponse.success(user);
     }
 
