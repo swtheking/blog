@@ -56,14 +56,14 @@ public class UserInfoController {
 
     @PostMapping("/login")
     @PassToken
-    public BaseResponse<UserInfo> login(@RequestHeader(name = "Content-Type", defaultValue = "application/json") String contentType,
+    public BaseResponse<String> login(@RequestHeader(name = "Content-Type", defaultValue = "application/json") String contentType,
                                       @RequestBody LoginParam loginParam) {
         log.info("用户请求登录获取Token");
         String username = loginParam.getUsername();
         String password = loginParam.getPassword();
         // 获取用户信息到数据库
         UserInfo user = userInfoService.checkLogin(username, password);
-        return BaseResponse.success(user);
+        return BaseResponse.success("登录成功");
     }
 
     @RequestMapping(value = "/loginOut", method = RequestMethod.GET)

@@ -22,6 +22,15 @@ public class BaseResponse<T> {
      * 错误代码
      */
     private Integer code;
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
     private static final String SUCCESS_MSG = "成功";
     /**
      * 返回数据

@@ -26,7 +26,6 @@ public class UserInfo {
     private Long id;
 
     @Column(name = "username", nullable = false, unique = true, columnDefinition = "varchar(100) comment '用户账号'")
-    @JSONField(name = "SSSS")
     private String username;
 
     @Column(name = "password", nullable = false, columnDefinition = "varchar(100) comment '用户密码' " )
