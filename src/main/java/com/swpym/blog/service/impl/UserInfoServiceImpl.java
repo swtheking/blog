@@ -45,7 +45,7 @@ public class UserInfoServiceImpl implements UserInfoService {
             throw new UnauthorizedException("用户不存在");
         }
         String encodedPassword = userInfo.getPassword();
-        if (password.equals(userInfo.getPassword())) {
+        if (password.equals(encodedPassword)) {
             // 生成token
             String token = JWTUtil.sign(username, encodedPassword);
             // 加入cookie

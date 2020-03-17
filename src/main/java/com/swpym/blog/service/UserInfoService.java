@@ -21,5 +21,13 @@ public interface UserInfoService {
      */
     UserInfo findAccountInfoByUsername(String username);
 
+    /*
+     * @description: 登录验证
+     * @author: shaowei
+     * @date: 2020-03-17 14:03:05
+     * @param username
+     * @param password
+     * @return: com.swpym.blog.pojo.UserInfo
+     */
     UserInfo checkLogin(String username, String password);
 }

@@ -28,7 +28,7 @@ public class ExceptionController {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public BaseResponse globalException(HttpServletRequest request, Throwable ex) {
-        return BaseResponse.error(HttpStatus.INTERNAL_SERVER_ERROR.value(), "其他异常", ex.getMessage());
+        return BaseResponse.error(HttpStatus.INTERNAL_SERVER_ERROR.value(), "系统异常", ex.getMessage());
     }
 
     /*
