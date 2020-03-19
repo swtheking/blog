@@ -37,6 +37,11 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
+    public UserInfo findUserInfoByUsername(String username) {
+        return userInfoDao.findByUsername(username);
+    }
+
+    @Override
     @Cacheable(value = "myToken", key = "#username")
     public UserInfo findAccountInfoByUsername(String username) {
         return userInfoDao.findAccountInfoByUsername(username);

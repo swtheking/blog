@@ -68,8 +68,17 @@ public class UserInfoController {
 
     @RequestMapping(value = "/loginOut", method = RequestMethod.GET)
     @UserLoginToken
-    public void loginOut() {
+    public BaseResponse<String> loginOut() {
         log.info("用户退出登录");
         CookieUtil.removeCookie(UserSessionConst.TOKEN_COOKIE);
+        return BaseResponse.success("退出成功");
     }
+
+    @ApiOperation(value = "根据用户账号信息获取用户")
+    @GetMapping(value = "/findUserInfoByUsername")
+    public BaseResponse<UserInfo> findUserInfoByUsername(String username){
+        UserInfo userInfo = userInfoService.findUserInfoByUsername(username);
+        return BaseResponse.success(userInfo);
+    }
+
 }

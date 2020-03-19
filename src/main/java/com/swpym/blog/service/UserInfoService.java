@@ -30,4 +30,11 @@ public interface UserInfoService {
      * @return: com.swpym.blog.pojo.UserInfo
      */
     UserInfo checkLogin(String username, String password);
+
+    /**
+     *
+     * @param username:用户账号
+     * @return 用户信息
+     */
+    UserInfo findUserInfoByUsername(String username);
 }
