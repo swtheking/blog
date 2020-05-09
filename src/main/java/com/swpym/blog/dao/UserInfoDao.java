@@ -15,4 +15,6 @@ public interface UserInfoDao extends JpaRepository<UserInfo,Long> {
 
     @Query(value = "select new com.swpym.blog.pojo.UserInfo(u.username,u.password) from UserInfo u where u.username = :username")
     UserInfo findAccountInfoByUsername(String username);
+
+    UserInfo findByUsername(String username);
 }
