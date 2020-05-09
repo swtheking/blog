@@ -80,11 +80,26 @@ logging:
 spring:
   devtools:
     restart:
-      enabled: true  #设置开启热部署
+      enabled: false  #设置开启热部署
       additional-paths: src/main/java #重启目录
       exclude: WEB-INF/**
   freemarker:
     cache: false    #页面不加载缓存，修改即时生效
+  rabbitmq:
+    host: 172.16.22.200
+    port: 5672
+    username: cpw
+    password: 123456
+    virtual-host: /
+    listener:
+      simple:
+        prefetch: 1
+        default-requeue-rejected: true
+    publisher-confirm-type: correlated
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 600MB
 
 
 xncoding:
@@ -99,3 +114,16 @@ httpclient:
   maxTotalConnections: 300
   defaultKeepAliveTimeMillis: 20000
   closeIdleConnectionWaitTimeSecs: 30
+
+####oss####
+aliyun:
+  oss:
+    endpoint: oss-cn-hangzhou.aliyuncs.com # oss对外服务的访问域名
+    accessKeyId: LTAI4G5XhEiqm8YyZDEmjLM8 # 访问身份验证中用到用户标识
+    accessKeySecret: Qqw8JIw2SQasHaddr0pXfXYJoHtq3i # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
+    bucketName: oss-sw-demo # oss的存储空间
+    url: http://oss-sw-demo.oss-cn-hangzhou.aliyuncs.com/
+    path: images/
+    maxErrorRetry: 3
+    connectionTimeout: 500
+
