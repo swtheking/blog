@@ -12,6 +12,7 @@ import com.swpym.blog.service.UserInfoService;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,6 +40,12 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public UserInfo findUserInfoByUsername(String username) {
         return userInfoDao.findByUsername(username);
+    }
+
+    @Override
+    @Async(value = "threadPoolExecutor")
+    public void test(Integer num) {
+        System.out.println(num);
     }
 
     @Override

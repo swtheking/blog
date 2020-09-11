@@ -1,8 +1,7 @@
 package com.swpym.blog.util;
 
-import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.OSS;
 import com.aliyun.oss.model.*;
-import com.swpym.blog.config.properties.AiOssProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import java.io.*;
+import java.net.URL;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -25,12 +25,46 @@ public class AliyunOssUtil {
     private static final Logger LOG = LoggerFactory.getLogger(AliyunOssUtil.class);
 
     @Autowired
-    private OSSClient ossClient;
-
-    @Autowired
-    private AiOssProperties aiOssProperties;
+    private OSS ossClient;
 
     /**
+     * @param bucketName
+     * @description: 删除存储空间buckName
+     * @author: shaowei
+     * @date: 2020-05-09 16:21:08
+     * @return: void
+     */
+    public void deleteBucket(String bucketName) {
+        ossClient.deleteBucket(bucketName);
+        LOG.info("删除" + bucketName + "Bucket成功");
+    }
+
+    /**
+     * @param bucketName
+     * @description: 获取存储空间基本信息
+     * @author: shaowei
+     * @date: 2020-05-11 09:23:37
+     * @return: com.aliyun.oss.model.BucketInfo
+     */
+    public BucketInfo getBucketInfo(String bucketName) {
+        return ossClient.getBucketInfo(bucketName);
+    }
+
+    /**
+     * 根据key删除OSS服务器上的文件
+     * <p>
+     * param ossClient oss连接
+     * param bucketName 存储空间
+     * param folder 模拟文件夹名 如"qj_nanjing/"
+     * param key Bucket下的文件的路径名+文件名 如："upload/cake.jpg"
+     */
+    public void deleteFile(String bucketName, String folder, String key) {
+        ossClient.deleteObject(bucketName, folder + key);
+        LOG.info("删除" + bucketName + "下的文件" + folder + key + "成功");
+    }
+
+    /**
+     * @param cannedACL  CannedAccessControlList.PublicRead 权限
      * @param bucketName
      * @description: 创建存储空间
      * @author: shaowei
@@ -44,23 +78,14 @@ public class AliyunOssUtil {
             ossClient.createBucket(bucketName);
             CreateBucketRequest createBucketRequest = new CreateBucketRequest(bucketName);
             createBucketRequest.setCannedACL(cannedACL);
+            // 如果创建存储空间的同时需要指定存储类型以及数据容灾类型, 可以参考以下代码。
+            // 此处以设置存储空间的存储类型为标准存储为例。
+            createBucketRequest.setStorageClass(StorageClass.Standard);
             Bucket bucket = ossClient.createBucket(createBucketRequest);
             LOG.info("创建存储空间成功");
             return bucket.getName();
         }
         return bucketNames;
-    }
-
-    /**
-     * @param bucketName
-     * @description: 删除存储空间buckName
-     * @author: shaowei
-     * @date: 2020-05-09 16:21:08
-     * @return: void
-     */
-    public void deleteBucket(String bucketName) {
-        ossClient.deleteBucket(bucketName);
-        LOG.info("删除" + bucketName + "Bucket成功");
     }
 
     /**
@@ -85,19 +110,6 @@ public class AliyunOssUtil {
             return fileDir;
         }
         return keySuffixWithSlash;
-    }
-
-    /**
-     * 根据key删除OSS服务器上的文件
-     * <p>
-     * param ossClient oss连接
-     * param bucketName 存储空间
-     * param folder 模拟文件夹名 如"qj_nanjing/"
-     * param key Bucket下的文件的路径名+文件名 如："upload/cake.jpg"
-     */
-    public void deleteFile(String bucketName, String folder, String key) {
-        ossClient.deleteObject(bucketName, folder + key);
-        LOG.info("删除" + bucketName + "下的文件" + folder + key + "成功");
     }
 
     /**
@@ -134,13 +146,17 @@ public class AliyunOssUtil {
             // 指定该Object被下载时的名称（指示MINME用户代理如何显示附加的文件，打开或下载，及文件名称）
             metadata.setContentDisposition("filename/filesize=" + fileName + "/" + fileSize + "Byte.");
             // 上传文件 (上传文件流的形式)
-            String saveFileName = UUID.randomUUID().toString().replace("-", "") + "." + fileType;
-            PutObjectResult putResult = ossClient.putObject(bucketName, storePath + saveFileName, is, metadata);
+            String saveFileName = UUID.randomUUID().toString().replace("-", "").toUpperCase() + "." + fileType;
+            String path = storePath + saveFileName;
+            PutObjectResult putResult = ossClient.putObject(bucketName, path, is, metadata);
             // 解析结果
-            resultStr = aiOssProperties.getUrl() + storePath + saveFileName;
+            Date expiration = new Date(System.currentTimeMillis() + 3600 * 10000);
+            // 生成URL
+            URL url = ossClient.generatePresignedUrl(bucketName, path, expiration);
+            resultStr = url.toString();
             LOG.info("putResult.getETag():" + putResult.getETag());
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
             LOG.error("上传阿里云OSS服务器异常." + e.getMessage(), e);
         }
         return resultStr;
@@ -189,5 +205,25 @@ public class AliyunOssUtil {
         }
         // 默认返回类型
         return "";
+    }
+
+    public void exportOssFile(OutputStream os, String objectName) throws IOException {
+        // ossObject包含文件所在的存储空间名称、文件名称、文件元信息以及一个输入流。
+        OSSObject ossObject = ossClient.getObject(objectName, "images/962AD55914FD4E6287D750752EB45BE1.png");
+        // 读取文件内容。
+        BufferedInputStream in = new BufferedInputStream(ossObject.getObjectContent());
+        BufferedOutputStream out = new BufferedOutputStream(os);
+        byte[] buffer = new byte[1024];
+        int lenght = 0;
+        while ((lenght = in.read(buffer)) != -1) {
+            out.write(buffer, 0, lenght);
+        }
+        if (out != null) {
+            out.flush();
+            out.close();
+        }
+        if (in != null) {
+            in.close();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.swpym.blog.config.properties;
 
+import com.aliyun.oss.*;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -29,5 +30,12 @@ public class AiOssProperties {
     private Integer maxErrorRetry;
 
     private Integer connectionTimeout;
+
+    public OSS getOssClient() {
+        ClientBuilderConfiguration conf = new ClientBuilderConfiguration();
+        conf.setConnectionTimeout(connectionTimeout);
+        conf.setMaxErrorRetry(maxErrorRetry);
+        return new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret, conf);
+    }
 
 }

@@ -15,6 +15,8 @@ public interface UserInfoService {
 
     void addUser(UserInfo userInfo);
 
+    void test(Integer num);
+
     /**
      * @param username:用户账号
      * @return 用户账号信息
@@ -37,4 +39,5 @@ public interface UserInfoService {
      * @return 用户信息
      */
     UserInfo findUserInfoByUsername(String username);
+
 }
